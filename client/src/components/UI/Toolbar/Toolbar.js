@@ -1,8 +1,10 @@
 import React, {Fragment} from 'react';
 import {Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
+import UserMenu from "./Menus/UserMenu";
+import AnonymousMenu from "./Menus/AnonymousMenu";
 
-const Toolbar = ({user}) => (
+const Toolbar = ({user, logout}) => (
     <Navbar>
         <Navbar.Header>
             <Navbar.Brand>
@@ -11,33 +13,12 @@ const Toolbar = ({user}) => (
             <Navbar.Toggle/>
         </Navbar.Header>
         <Navbar.Collapse>
-            <Nav pullRight>
+            <Nav>
                 <LinkContainer to="/" exact>
                     <NavItem>Artists</NavItem>
                 </LinkContainer>
-                {user ?
-                    <Fragment>
-                        <LinkContainer to="/profile" exact>
-                            <NavItem>Hello, {user.username}!</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/logout" exact>
-                            <NavItem>Logout</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/track_history" exact>
-                            <NavItem>Track History</NavItem>
-                        </LinkContainer>
-                    </Fragment>
-                    :
-                    <Fragment>
-                        <LinkContainer to="/register" exact>
-                            <NavItem>Sign up</NavItem>
-                        </LinkContainer>
-                        <LinkContainer to="/login" exact>
-                            <NavItem>Login</NavItem>
-                        </LinkContainer>
-                    </Fragment>
-                }
             </Nav>
+            {user ? <UserMenu user={user} logout={logout}/> : <AnonymousMenu/>}
         </Navbar.Collapse>
     </Navbar>
 );
